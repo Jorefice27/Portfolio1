@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection"/>
+      <script src="./welcome.js"></script>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body style="background-color: #b2dfdb" align="center">
+      <!--Import jQuery before materialize.js-->
+      <div class="card-panel teal light-2">
+        <h1 align="center" class="white-text">Soduku</h1>
+        <span class="white-text">A simple Soduku game to play in your browser</p>
+      </div>
+
+      <a href="#!" class="btn" onclick="Materialize.showStaggeredList('#difficuties')">New Game</a>
+      <ul id="difficuties">
+        <br>
+        <li style="transform: translateX(0px); opacity: 0;"><div class="chip">Pick A Difficulty</div></li>
+        <br>
+        <li style="transform: translateX(0px); opacity: 0;"><a class="waves-effect waves-light btn" onClick="navigate('easy')">Easy</a></li>
+        <br>
+        <li style="transform: translateX(0px); opacity: 0;"><a class="waves-effect waves-light btn" onClick="navigate('medium')">Medium</a></li>
+        <br>
+        <li style="transform: translateX(0px); opacity: 0;"><a class="waves-effect waves-light btn" onClick="navigate('hard')">Hard</a></li>
+        <br>
+      </ul>
+
+      <a href="#!" class="btn" onclick="Materialize.showStaggeredList('#instructions')">Instructions</a>
+      <ul id="instructions">
+        <li style="transform: translateX(0px); opacity: 0;">
+          <div class="row">
+            <div class="col s4 offset-s4">
+              <div class="card teal">
+                <div class="card-content white-text">
+                  <p>Soduku is a classic puzzle game that takes place on a 9x9 grid which is sub-divided into nine 3x3 grids.
+                  The objective is to fill each row, coumn, and 3x3 grid exactly with numbers 1-9 (not necessarily in numerical order).
+                  Consequently, no row, column may have any repeated digits.
+                  The grid will have some of the values filled in for you, but more of the grid will be blank if you pick a
+                  higher difficulty.
+                  </p>
+                </div>
+                <div class="card-action">
+                  <a href="https://en.wikipedia.org/wiki/Sudoku" target="_blank">Learn More</a>
+                  <a href="#!" onclick="Materialize.showStaggeredList('#difficuties')">Start A Game</a>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+    </body>
+  </html>
+
