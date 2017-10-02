@@ -1,69 +1,60 @@
 <!DOCTYPE html>
   <html>
-    <head >
+    <head>
       <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection"/>
+      <script src="./welcome.js"></script>
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
-    <body style="background-color: #b2dfdb">
-
- 	<div class="parallax-container">
-		<div class="parallax"><img src="images/parallax1.jpg"></div>
-	</div>
-	<div class="section teal lighten-2">
-		<div class="row container">
-			<h2 class="header" align="center">Sudoku</h2>
-			<p class="grey-text text-darken-3 lighten-3" align="center">A simple Sudoku game to play in your browser.</p>
-		</div>
-	</div>
-	<div class="section teal lighten-4">
-		<div class="row container">
-			<h3></h3>
-		</div>
-	</div>
-	<div class="section teal lighten-2" align="center">
-		<div class="row container">
-			 <a class="btn-floating btn-large waves-effect waves-light red" href="#modal1"><i class="material-icons">add</i></a>
-			 <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal Bottom Sheet Style</a>
-
-			 <p>New Game</p>
-
-		</div>
-	</div>
-	<div class="section teal lighten-4">
-		<div class="row container">
-			<h3></h3>
-		</div>
-	</div>
-	<div class="section teal lighten-2" align="center">
-		<div class="row container">
-			 <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">assignment</i></a>
-			 <p>Instructions</p>
-		</div>
-	</div>
-	<div class="parallax-container">
-	<div class="parallax"><img src="images/parallax2.jpg"></div>
-
-	<!-- Modal Structure -->
-			  <div id="modal1" class="modal bottom-sheet">
-			    <div class="modal-content">
-			      <h4>Modal Header</h4>
-			      <p>A bunch of text</p>
-			    </div>
-			    <div class="modal-footer">
-			      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-			    </div>
-			  </div>
-
-
-	</div>
-
+    <body style="background-color: #b2dfdb" align="center">
       <!--Import jQuery before materialize.js-->
+      <div class="card-panel teal light-2">
+        <h1 align="center" class="white-text">Soduku</h1>
+        <span class="white-text">A simple Soduku game to play in your browser</p>
+      </div>
+
+      <a href="#!" class="btn" onclick="Materialize.showStaggeredList('#difficuties')">New Game</a>
+      <ul id="difficuties">
+        <br>
+        <li style="transform: translateX(0px); opacity: 0;"><div class="chip">Pick A Difficulty</div></li>
+        <br>
+        <li style="transform: translateX(0px); opacity: 0;"><a class="waves-effect waves-light btn" onClick="navigate('easy')">Easy</a></li>
+        <br>
+        <li style="transform: translateX(0px); opacity: 0;"><a class="waves-effect waves-light btn" onClick="navigate('medium')">Medium</a></li>
+        <br>
+        <li style="transform: translateX(0px); opacity: 0;"><a class="waves-effect waves-light btn" onClick="navigate('hard')">Hard</a></li>
+        <br>
+      </ul>
+
+      <a href="#!" class="btn" onclick="Materialize.showStaggeredList('#instructions')">Instructions</a>
+      <ul id="instructions">
+        <li style="transform: translateX(0px); opacity: 0;">
+          <div class="row">
+            <div class="col s4 offset-s4">
+              <div class="card teal">
+                <div class="card-content white-text">
+                  <p>Soduku is a classic puzzle game that takes place on a 9x9 grid which is sub-divided into nine 3x3 grids.
+                  The objective is to fill each row, coumn, and 3x3 grid exactly with numbers 1-9 (not necessarily in numerical order).
+                  Consequently, no row, column may have any repeated digits.
+                  The grid will have some of the values filled in for you, but more of the grid will be blank if you pick a
+                  higher difficulty.
+                  </p>
+                </div>
+                <div class="card-action">
+                  <a href="https://en.wikipedia.org/wiki/Sudoku" target="_blank">Learn More</a>
+                  <a href="#!" onclick="Materialize.showStaggeredList('#difficuties')">Start A Game</a>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
     </body>
