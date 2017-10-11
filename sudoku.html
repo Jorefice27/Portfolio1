@@ -3,6 +3,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="sudoku.js"></script>
   </head>
 
   <body style="background-color: #b2dfdb" align="center">
@@ -11,18 +12,9 @@
       <h1 align="center" class="white-text">Sudoku</h1>
     </div>
 
-    <div>
-      <canvas id="canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
-
-      <script>
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
-
-        ctx.moveTo(10, 10);
-        ctx.lineTo(490, 490);
-        ctx.stroke();
-
-      </script>
+    <div id="sudoku">
+      <canvas id="canvas" width="450" height="450" style="border:1px solid #000000;"></canvas>
+      <input type="button" onclick="createHTMLForSudoku()"></input>
     </div>
 
 
