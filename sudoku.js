@@ -7,15 +7,15 @@ function init()
 
 function generateSudoku(sudoku)
 {
-	
+	console.log('starting');
 	initializeSudoku(sudoku);
 	fillFirstGrid(sudoku);
 	fillSecondGrid(sudoku);
 	fillThirdGrid(sudoku);
 	fillFirstCol(sudoku);
-	printSudoku(sudoku);
 	console.log('backtracking...');
-	backtrack(sudoku)//, 3, 1);
+	backtrack(sudoku, []);//, 3, 1);
+	// backtrack(sudoku);
 	
 	// console.log(sudoku);
 	printSudoku(sudoku);
@@ -106,25 +106,18 @@ function fillFirstCol(sudoku)
 }
 
 //Instead of going top to bottom, find the element with the fewest optinos and fill that in
-function backtrack(sudoku)
+function backtrack(sudoku, list)
 {
-	// if(col > 8)
-	// {
-	// 	col = 0;
-	// 	row++;
-	// 	if(row > 8)
-	// 	{
-	// 		return true; //figure out what to return here
-	// 	}
-	// }
+
 	var cell = findCell(sudoku)
 	var row = cell[0];
 	var col = cell[1];
 	if(row == null)
 	{
-		return true;
+		printSudoku(sudoku);
+		list.push(sudoku);
+		return list;
 	}
-	// if(sudoku[row][col].val == null)
 	else
 	{
 		var options = sudoku[row][col].options;
@@ -144,28 +137,32 @@ function backtrack(sudoku)
 			//check that we have at least one options for all other cells
 			if(validateSudoku(sudoku))
 			{
+				// printSudoku(sudoku);
 				//fill the next cell
-				var ret = backtrack(sudoku)//, row, col+1);
+				// var ret = backtrack(sudoku, list)//, row, col+1);
+				list = backtrack(sudoku, list);
 				//if this returns true, then we successfully filled the board so we can return it
-				if(ret)
-				{
-					return true;
-				}
+				// if(ret != null)
+				// {
+				// 	list.push(ret);
+				// 	return list;
+				// }
 			}
-			//if the sudoku wasn't validated or leads to an incomplete board later on, try the next value
-			updateSudoku(sudoku, row, col, val, false);
-			sudoku[row][col].val = null;
-			removeValue(sudoku[row][col].options, val);
-			removeValue(options, val);
+			else
+			{
+				//if the sudoku wasn't validated or leads to an incomplete board later on, try the next value
+				updateSudoku(sudoku, row, col, val, false);
+				sudoku[row][col].val = null;
+				removeValue(sudoku[row][col].options, val);
+				removeValue(options, val);
+			}
 		}
 
 		sudoku[row][col].options = origOptions;
-		return false;
+		return list;
 	}
-	// else
-	// {
-	// 	backtrack(sudoku)//, row, col+1);
-	// }
+
+	console.log(list);
 }
 
 function findCell(sudoku)
@@ -340,3 +337,54 @@ function printSudoku(sudoku)
 	}
 	console.log(' ');
 }
+
+
+// function backtrack(sudoku)
+// {
+
+// 	var cell = findCell(sudoku)
+// 	var row = cell[0];
+// 	var col = cell[1];
+// 	if(row == null)
+// 	{
+// 		return true;
+// 	}
+// 	// if(sudoku[row][col].val == null)
+// 	else
+// 	{
+// 		var options = sudoku[row][col].options;
+// 		var origOptions = [];
+// 		for(var i = 0; i < options.length; i++)
+// 		{
+// 			origOptions[i] = options[i];
+// 		}
+// 		for(var i = 0; i < options.length; i++)
+// 		{
+// 			//get all the possible options for this cell
+// 			val = sudoku[row][col].options[randomInt(options.length - 1)];
+// 			sudoku[row][col].val = val;
+// 			// printSudoku(sudoku);
+// 			//update the options for other cells
+// 			updateSudoku(sudoku, row, col, val, true);
+// 			//check that we have at least one options for all other cells
+// 			if(validateSudoku(sudoku))
+// 			{
+// 				//fill the next cell
+// 				var ret = backtrack(sudoku)//, row, col+1);
+// 				//if this returns true, then we successfully filled the board so we can return it
+// 				if(ret)
+// 				{
+// 					return true;
+// 				}
+// 			}
+// 			//if the sudoku wasn't validated or leads to an incomplete board later on, try the next value
+// 			updateSudoku(sudoku, row, col, val, false);
+// 			sudoku[row][col].val = null;
+// 			removeValue(sudoku[row][col].options, val);
+// 			removeValue(options, val);
+// 		}
+
+// 		sudoku[row][col].options = origOptions;
+// 		return false;
+// 	}
+// }
