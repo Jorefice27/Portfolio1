@@ -13,10 +13,16 @@
     </div>
 
     <div id="sudoku">
-      <canvas id="canvas" width="450" height="450" style="border:1px solid #000000;"></canvas>
-      <input type="button" onclick="createHTMLForSudoku()"></input>
+      <canvas id="canvas" width="450" height="450" style="border:1px solid #000000;"></canvas>      
     </div>
 
+      <hr>
+      <div class="row">
+          <div class="col s2 offset-s4"><button type="button" class="btn btn-primary" onclick="getHint()">Hint</button></div>
+          <div class="col s2"><button type="button" class="btn btn-primary" onclick="checkBoard()">Check</button></div>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="createHTMLForSudoku()">Make Sudoku</button>
+      <hr>
       <button type="button" class="btn btn-primary" onclick="init()">test</button> <!-- Delete this, it's just for my testing -->
 
 
