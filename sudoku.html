@@ -3,6 +3,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="sudoku.js"></script>
   </head>
 
   <body style="background-color: #b2dfdb" align="center">
@@ -11,27 +12,15 @@
       <h1 align="center" class="white-text">Sudoku</h1>
     </div>
 
-    <table class="center-align">
-      <tr>
-        <td style="width:50"><input  id="button1" type="button" value= "1" style="color:white"/></td>
-        <td style="width:50"><input  id="button2" type="button" value= "4" style="color:white"/></td>
-        <td style="width:50"><input  id="button3" type="button" value= "2" style="color:white"/></td>
-        <td><input  id="button4" type="button" value= "3" style="color:white"/></td>
-      </tr>
-      <tr>
-        <td ><input  id="button5" type="button" value= "1" style="color:white"/></td>
-        <td ><input  id="button6" type="button" value= "3" style="color:white"/></td>
-        <td ><input  id="button7" type="button" value= "4" style="color:white"/></td>
-        <td ><input  id="button8" type="button" value= "2" style="color:white"/></td>
-      </tr>
-    </table>
-
-   <div class="container"> <div class="row"> <div class="col s1"><input type="text" name=""></div></div></div>
+    <div id="sudoku">
+      <canvas id="canvas" width="450" height="450" style="border:1px solid #000000;"></canvas>
+      <input type="button" onclick="createHTMLForSudoku()"></input>
+    </div>
 
       <button type="button" class="btn btn-primary" onclick="init()">test</button> <!-- Delete this, it's just for my testing -->
 
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
-    <script type="text/javascript" src="sudoku.js"></script>
   </body>
 </html>

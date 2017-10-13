@@ -7,16 +7,25 @@ function init()
 
 function generateSudoku(sudoku)
 {
+<<<<<<< HEAD
 	console.log('starting');
+=======
+
+>>>>>>> 7a0eb7e1545cd372bdc6d4fbda1f86462e4bfb25
 	initializeSudoku(sudoku);
 	fillFirstGrid(sudoku);
 	fillSecondGrid(sudoku);
 	fillThirdGrid(sudoku);
 	fillFirstCol(sudoku);
 	console.log('backtracking...');
+<<<<<<< HEAD
 	backtrack(sudoku, []);//, 3, 1);
 	// backtrack(sudoku);
 	
+=======
+	backtrack(sudoku)//, 3, 1);
+
+>>>>>>> 7a0eb7e1545cd372bdc6d4fbda1f86462e4bfb25
 	// console.log(sudoku);
 	printSudoku(sudoku);
 }
@@ -203,7 +212,7 @@ function remove(array, index)
 	if(index < array.length && index >= 0)
 	{
 		array.splice(index, 1);
-	}	
+	}
 }
 
 function removeValue(vals, value)
@@ -338,6 +347,7 @@ function printSudoku(sudoku)
 	console.log(' ');
 }
 
+<<<<<<< HEAD
 
 // function backtrack(sudoku)
 // {
@@ -388,3 +398,65 @@ function printSudoku(sudoku)
 // 		return false;
 // 	}
 // }
+=======
+function createHTMLForSudoku(){
+  createHTMLForInputs();
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  ctx.lineWidth = 1;
+  let x = 0;
+  let y = 0;
+
+  ctx.beginPath();
+  //create vertical lines
+  for(var i = 0; i < 9; i++){
+    ctx.moveTo(x,y);
+    ctx.lineTo(x,y+450);
+    x += 50;
+  }
+  x = 0;
+  //create horizontal lines
+  for(var i = 0; i < 9; i++){
+    ctx.moveTo(x,y);
+    ctx.lineTo(x+450,y);
+    y += 50;
+  }
+  ctx.stroke();
+  x = 0;
+  y = 0;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  //creates Darker lines
+  ctx.moveTo(150,0);
+  ctx.lineTo(150,450);
+  ctx.moveTo(300,0);
+  ctx.lineTo(300,450);
+  ctx.moveTo(0,150);
+  ctx.lineTo(450,150);
+  ctx.moveTo(0,300);
+  ctx.lineTo(450,300);
+
+  ctx.stroke();
+}
+
+function createHTMLForInputs(){
+  let row = 0;
+  let col = 0;
+  let left = 418;
+  let top = 178;
+  let s = "";
+
+  for(let k = 0; k < 9; k++){
+    for(let l = 0; l < 9; l++){
+      s += "<input type=\"number\" style=\"position:absolute;left:" + left +"px;top:" + top + "px;width:25px; id=\"" + row + col + "/>";
+      col++;
+      left += 50;
+    }
+    row++;
+    left = 418;
+    col = 0;
+    top += 50;
+  }
+  document.getElementById("sudoku").innerHTML += s;
+}
+>>>>>>> 7a0eb7e1545cd372bdc6d4fbda1f86462e4bfb25
