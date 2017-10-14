@@ -21,6 +21,10 @@ function generateSudoku(sudoku)
 	var solution = copy(sudoku);
 	console.log("________________________________Solution__________________________________________");
 	printSudoku(solution)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 6dbbc8a4547dab46077fe9fd75807d09cd44da08
 	setDifficulty(sudoku);
 
 
@@ -28,8 +32,14 @@ function generateSudoku(sudoku)
 
 
 	// console.log(sudoku);
+<<<<<<< HEAD
 
 	makeUniquePuzzle(sudoku);
+=======
+=======
+	makeUniquePuzzle(sudoku);
+>>>>>>> 1f2f4161c434a1995823191b4e9f3edb2ee3e9d3
+>>>>>>> 6dbbc8a4547dab46077fe9fd75807d09cd44da08
 	printSudoku(sudoku);
 }
 
