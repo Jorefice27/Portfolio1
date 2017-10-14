@@ -6,7 +6,7 @@
     <script src="sudoku.js"></script>
     <style>
     .center{
-      background-image: url(https://vignette.wikia.nocookie.net/math/images/a/a6/Blank_sudoku.svg/revision/latest?cb=20060919030619&path-prefix=en);
+      background-image: url(https://upload.wikimedia.org/wikipedia/commons/e/e6/Sudoku_template.svg);
       width: 600px;
       height: 600px;
       background-size: cover;
@@ -14,12 +14,12 @@
 
       display: block;
 
+      top: 0%;
       left: 50%;
     }
     #game{
-      width:560px;
-      height:20px;
-      margin-top: 40px;
+      width:599px;
+      height:20%;
     }
     .cell input{
       display: inline-block;
@@ -27,7 +27,6 @@
 
       border: 1px solid black;
       width: 40px;
-      height: 10px;
 
       text-align: center;
       font-size: 30px;
@@ -35,13 +34,9 @@
     table {
       margin-top: 20px;
     }
-    tbody{
-      margin-top: 200px;
-      height: 600px;
-    }
     td {
-      height: 50px;
-      width: 75px;
+      height: 20px;
+      width: 100px;
       border: 1px solid;
       text-align: center;
     }
@@ -51,11 +46,8 @@
     td:nth-child(3n){
         border-right: solid;
     }
-    tr:first-child{
-      border-top: solid;
-    }
-    tr:nth-child(3n) td {
-      border-bottom: solid;
+    tr{
+      height: 20px;
     }
     </style>
   </head>
@@ -67,8 +59,8 @@
     </div>
 
     <div id="grid" align="center">
-      <div id="sudoku" class="center">
-      </div>
+        <div id="sudoku" class="center">
+        </div>
     </div>
 
       <hr>
