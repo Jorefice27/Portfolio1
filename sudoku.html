@@ -7,15 +7,58 @@
     <style>
     .center{
       background-image: url(https://vignette.wikia.nocookie.net/math/images/a/a6/Blank_sudoku.svg/revision/latest?cb=20060919030619&path-prefix=en);
-      width: 500px;
-      height: 500px;
+      width: 600px;
+      height: 600px;
       background-size: cover;
       background-repeat: no-repeat;
-      top: 50%;
+
+      background-position: center;
+      background-attachment: local;
+
+      display: block;
+
       left: 50%;
     }
-    {
-      width: 50%
+    #game{
+      width:560px;
+      height:20px;
+      margin-top: 40px;
+    }
+    .cell input{
+      display: inline-block;
+      float: left;
+
+      border: 1px solid black;
+      width: 40px;
+      height: 10px;
+
+      text-align: center;
+      font-size: 30px;
+    }
+    table {
+      margin-top: 20px;
+    }
+    tbody{
+      margin-top: 200px;
+      height: 600px;
+    }
+    td {
+      height: 50px;
+      width: 75px;
+      border: 1px solid;
+      text-align: center;
+    }
+    td:first-child{
+      border-left: solid;
+    }
+    td:nth-child(3n){
+        border-right: solid;
+    }
+    tr:first-child{
+      border-top: solid;
+    }
+    tr:nth-child(3n) td {
+      border-bottom: solid;
     }
     </style>
   </head>
