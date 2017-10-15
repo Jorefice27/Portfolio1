@@ -4,6 +4,60 @@
     <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="sudoku.js"></script>
+    <style>
+    .center{
+      background-image: url(https://vignette.wikia.nocookie.net/math/images/a/a6/Blank_sudoku.svg/revision/latest?cb=20060919030619&path-prefix=en);
+      width: 600px;
+      height: 600px;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      display: block;
+
+      left: 50%;
+    }
+    #game{
+      width:560px;
+      height:20px;
+      margin-top: 40px;
+    }
+    .cell input{
+      display: inline-block;
+      float: left;
+
+      border: 1px solid black;
+      width: 40px;
+      height: 10px;
+
+      text-align: center;
+      font-size: 30px;
+    }
+    table {
+      margin-top: 20px;
+    }
+    tbody{
+      margin-top: 200px;
+      height: 600px;
+    }
+    td {
+      height: 50px;
+      width: 75px;
+      border: 1px solid;
+      text-align: center;
+    }
+    td:first-child{
+      border-left: solid;
+    }
+    td:nth-child(3n){
+        border-right: solid;
+    }
+    tr:first-child{
+      border-top: solid;
+    }
+    tr:nth-child(3n) td {
+      border-bottom: solid;
+    }
+    </style>
   </head>
 
   <body style="background-color: #b2dfdb" align="center">
@@ -12,8 +66,9 @@
       <h1 align="center" class="white-text">Sudoku</h1>
     </div>
 
-    <div id="sudoku">
-      <canvas id="canvas" width="450" height="450" style="border:1px solid #000000;"></canvas>      
+    <div id="grid" align="center">
+      <div id="sudoku" class="center">
+      </div>
     </div>
 
       <hr>
@@ -24,7 +79,6 @@
       <button type="button" class="btn btn-primary" onclick="createHTMLForSudoku()">Make Sudoku</button>
       <hr>
       <button type="button" class="btn btn-primary" onclick="init()">test</button> <!-- Delete this, it's just for my testing -->
-
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>

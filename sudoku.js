@@ -21,8 +21,7 @@ function generateSudoku(sudoku)
 	var solution = copy(sudoku);
 	console.log("________________________________Solution__________________________________________");
 	printSudoku(solution)
-	makeUniquePuzzle(sudoku, difficulty);
-	printSudoku(sudoku);
+	makeUniquePuzzle(sudoku);
 }
 
 function initializeSudoku(sudoku)
@@ -141,13 +140,11 @@ function backtrack(sudoku, list, print)
 			//get all the possible options for this cell
 			val = sudoku[row][col].options[randomInt(options.length - 1)];
 			sudoku[row][col].val = val;
-			// printSudoku(sudoku);
 			//update the options for other cells
 			updateSudoku(sudoku, row, col, val, true);
 			//check that we have at least one options for all other cells
 			if(validateSudoku(sudoku))
 			{
-				// printSudoku(sudoku);
 				list = backtrack(copy(sudoku), list, print);
 			}
 			else
@@ -175,7 +172,6 @@ function makeUniquePuzzle(sudoku, difficulty)
 	while((i < num) && cells.length > 0)
 	{
 		var removed = false;
-		printSudoku(sudoku);
 		while(!removed && cells.length > 0)
 		{
 			var arr = [];
@@ -194,7 +190,6 @@ function makeUniquePuzzle(sudoku, difficulty)
 			valid = true;
 		
 			//if we have exactly one solution then we can take more cells away, otherwise we need to retry
-			// printSudoku(cop);
 			var cop = copy(sudoku);
 			var results = backtrack(cop, [], false);
 			if(results.length == 1)
@@ -207,7 +202,7 @@ function makeUniquePuzzle(sudoku, difficulty)
 				sudoku[arr[0][0]][arr[0][1]].val = arr[0][2];
 				// sudoku[arr[1][0]][arr[1][1]].val = arr[1][2];
 			}
-		}	
+		}
 	}
 	console.log('________________________________Final Sudoku__________________________________________')
 	printSudoku(sudoku);
@@ -373,7 +368,6 @@ function updateGrid(sudoku, row, col, val, adding)
 
 function updateSudoku2(sudoku, row, col, val)
 {
-	printSudoku(sudoku);
 	updateRow2(sudoku, row, val);
 	updateCol2(sudoku, col, val);
 	updateGrid2(sudoku, row, col, val);
@@ -525,56 +519,6 @@ function printSudoku(sudoku)
 	console.log(' ');
 }
 
-// function backtrack(sudoku)
-// {
-
-// 	var cell = findCell(sudoku)
-// 	var row = cell[0];
-// 	var col = cell[1];
-// 	if(row == null)
-// 	{
-// 		return true;
-// 	}
-// 	// if(sudoku[row][col].val == null)
-// 	else
-// 	{
-// 		var options = sudoku[row][col].options;
-// 		var origOptions = [];
-// 		for(var i = 0; i < options.length; i++)
-// 		{
-// 			origOptions[i] = options[i];
-// 		}
-// 		for(var i = 0; i < options.length; i++)
-// 		{
-// 			//get all the possible options for this cell
-// 			val = sudoku[row][col].options[randomInt(options.length - 1)];
-// 			sudoku[row][col].val = val;
-// 			// printSudoku(sudoku);
-// 			//update the options for other cells
-// 			updateSudoku(sudoku, row, col, val, true);
-// 			//check that we have at least one options for all other cells
-// 			if(validateSudoku(sudoku))
-// 			{
-// 				//fill the next cell
-// 				var ret = backtrack(sudoku)//, row, col+1);
-// 				//if this returns true, then we successfully filled the board so we can return it
-// 				if(ret)
-// 				{
-// 					return true;
-// 				}
-// 			}
-// 			//if the sudoku wasn't validated or leads to an incomplete board later on, try the next value
-// 			updateSudoku(sudoku, row, col, val, false);
-// 			sudoku[row][col].val = null;
-// 			removeValue(sudoku[row][col].options, val);
-// 			removeValue(options, val);
-// 		}
-
-// 		sudoku[row][col].options = origOptions;
-// 		return false;
-// 	}
-// }
-
 function copy(sudoku)
 {
 	var copy = [[], [], [], [], [], [], [], [], []];
@@ -593,29 +537,6 @@ function copy(sudoku)
 	}
 
 	return copy;
-}
-
-function setDifficulty(sudoku)
-{
-	var difficulty = localStorage.getItem("difficulty");
-	var num = (difficulty == 'easy')? 30 : (difficulty == 'medium')? 40 : 55;
-	for(var i = 0; i < num; i++)
-	{
-		var set = false;
-		while(!set)
-		{
-			var row = randomInt(8);
-			var col = randomInt(8);
-			if(sudoku[row][col].val != null)
-			{
-				updateSudoku(sudoku, row, col, sudoku[row][col], false);
-				sudoku[row][col].val = null;
-				set = true;
-				printSudoku(sudoku);
-			}	
-		}
-	}
-	console.log("__________________________________" + difficulty + "________________________________________");
 }
 
 function addToSudoku(sudoku, row, col, val)
@@ -645,61 +566,26 @@ function findErrors(sudoku)
 
 function createHTMLForSudoku(){
   createHTMLForInputs();
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
-  ctx.lineWidth = 1;
-  let x = 0;
-  let y = 0;
-
-  ctx.beginPath();
-  //create vertical lines
-  for(var i = 0; i < 9; i++){
-    ctx.moveTo(x,y);
-    ctx.lineTo(x,y+450);
-    x += 50;
-  }
-  x = 0;
-  //create horizontal lines
-  for(var i = 0; i < 9; i++){
-    ctx.moveTo(x,y);
-    ctx.lineTo(x+450,y);
-    y += 50;
-  }
-  ctx.stroke();
-  x = 0;
-  y = 0;
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  //creates Darker lines
-  ctx.moveTo(150,0);
-  ctx.lineTo(150,450);
-  ctx.moveTo(300,0);
-  ctx.lineTo(300,450);
-  ctx.moveTo(0,150);
-  ctx.lineTo(450,150);
-  ctx.moveTo(0,300);
-  ctx.lineTo(450,300);
-
-  ctx.stroke();
 }
 
 function createHTMLForInputs(){
   let row = 0;
   let col = 0;
-  let left = 418;
-  let top = 178;
   let s = "";
 
+  s+="<table id=\"game\" style=\"border-collapse: collapse;\">";
   for(let k = 0; k < 9; k++){
+    s+="<tr class=\"row\">";
     for(let l = 0; l < 9; l++){
-      s += "<input type=\"number\" style=\"position:absolute;left:" + left +"px;top:" + top + "px;width:25px; id=\"" + row + col + "/>";
+      s += "<td class=\"cell\"><input type=\"text\" maxlength=\"1\" id=\"" + row + col + "\"></td>";
       col++;
-      left += 50;
     }
+    s+="</tr>";
     row++;
-    left = 418;
     col = 0;
-    top += 50;
   }
+  s+="</table>";
   document.getElementById("sudoku").innerHTML += s;
+
 }
+
