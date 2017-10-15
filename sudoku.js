@@ -258,7 +258,7 @@ function contains(array, val)
 	return false;
 }
 
-//returns a suffeled array of all possible cells ([0,0] through [8,8])
+//returns a shuffeled array of all possible cells ([0,0] through [8,8])
 function shuffledCells()
 {
 	//create an array with all 81 cell positions
@@ -611,11 +611,12 @@ function addValuesToInputs(sudoku){
       var val = sudoku[i][j].val;
       var s = "" + row + col;
 
-      if(val == undefined){
+      if(val == null){
         document.getElementById(s).value = "";
       }
       else{
         document.getElementById(s).value = val;
+        document.getElementById(s).readOnly = true;
       }
       col++;
     }
@@ -625,7 +626,18 @@ function addValuesToInputs(sudoku){
 }
 
 function getHint(){
-
+  var cells = shuffledCells();
+  while(true){
+    var cell = cells.pop();
+    var row = cell[0];
+    var col = cell[1];
+    var s = "" + row + col;
+    if(document.getElementById(s).value == ""){
+      var solution = getSolution();
+      document.getElementById(s).value = solution[row][col];
+      break;
+    }
+  }
 }
 
 function createHTMLForSudoku(){
@@ -637,7 +649,7 @@ function createHTMLForSudoku(){
   for(let k = 0; k < 9; k++){
     s+="<tr class=\"row\">";
     for(let l = 0; l < 9; l++){
-      s += "<td class=\"cell\"><input type=\"text\" maxlength=\"1\" id=\"" + row + col + "\" class=\"inputvalue\"></td>";
+      s += "<td class=\"cell\"><input type=\"text\" maxlength=\"1\" id=\"" + row + col + "\" class=\"inputvalue\" style=\"border-bottom: 0px\"></td>";
       col++;
     }
     s+="</tr>";
