@@ -266,7 +266,7 @@ function contains(array, val)
 	return false;
 }
 
-//returns a suffeled array of all possible cells ([0,0] through [8,8])
+//returns a shuffeled array of all possible cells ([0,0] through [8,8])
 function shuffledCells()
 {
 	//create an array with all 81 cell positions
@@ -585,7 +585,7 @@ function getSolution()
 {
 	var temp = localStorage.getItem('solution');
 	var solution = JSON.parse(temp);
-	return solution;
+  	return solution;
 }
 
 function addToSudoku(sudoku, row, col, val)
@@ -626,11 +626,12 @@ function addValuesToInputs(sudoku){
       var val = sudoku[i][j].val;
       var s = "" + row + col;
 
-      if(val == undefined){
+      if(val == null){
         document.getElementById(s).value = "";
       }
       else{
         document.getElementById(s).value = val;
+        document.getElementById(s).readOnly = true;
       }
       col++;
     }
@@ -640,7 +641,22 @@ function addValuesToInputs(sudoku){
 }
 
 function getHint(){
-
+  var cells = shuffledCells();
+  while(true){
+    var cell = cells.pop();
+    if(cells == null){
+      return;
+    }
+    var row = cell[0];
+    var col = cell[1];
+    var s = "" + row + col;
+    if(document.getElementById(s).value == ""){
+      var solution = getSolution();
+      document.getElementById(s).value = solution[row][col].val;
+      document.getElementById(s).readOnly = true;
+      break;
+    }
+  }
 }
 
 function createHTMLForSudoku(){
