@@ -21,7 +21,7 @@ function generateSudoku(sudoku)
 	var solution = copy(sudoku);
 	console.log("________________________________Solution__________________________________________");
 	printSudoku(solution)
-	makeUniquePuzzle(sudoku);
+	makeUniquePuzzle(sudoku, difficulty);
 	printSudoku(sudoku);
 }
 
@@ -110,15 +110,21 @@ function fillFirstCol(sudoku)
 }
 
 //Instead of going top to bottom, find the element with the fewest optinos and fill that in
-function backtrack(sudoku, list)
+function backtrack(sudoku, list, print)
 {
-
+	if(print)
+	{
+		printSudoku(sudoku);
+	}
+	if(list.length > 1)
+	{
+		return list;
+	}
 	var cell = findCell(sudoku)
 	var row = cell[0];
 	var col = cell[1];
 	if(row == null)
 	{
-		// printSudoku(sudoku);
 		list.push(sudoku);
 		return list;
 	}
@@ -142,7 +148,7 @@ function backtrack(sudoku, list)
 			if(validateSudoku(sudoku))
 			{
 				// printSudoku(sudoku);
-				list = backtrack(copy(sudoku), list);
+				list = backtrack(copy(sudoku), list, print);
 			}
 			else
 			{
@@ -165,43 +171,46 @@ function makeUniquePuzzle(sudoku, difficulty)
 {
 	var num = (difficulty == 'easy')? 30 : (difficulty == 'medium')? 40 : 55;
 	var  i = 0;
-	while(i < num)
+	var cells = shuffledCells();
+	while((i < num) && cells.length > 0)
 	{
 		var removed = false;
-		while(!removed)
+		printSudoku(sudoku);
+		while(!removed && cells.length > 0)
 		{
-			var cop = copy(sudoku);
+			var arr = [];
 			//clear a pair of cells
-			for(var j = 0; j < 2; j++)
-			{
-				var valid = false
-				while(!valid)
-				{
-					//randomly clear one cell
-					var row = randomInt(8);
-					var col = randomInt(8);
-					var val = cop[row][col].val;
-					if(val != null)
-					{
-						cop[row][col].val = null;
-						updateSudoku(cop, row, col, val, false);
-						valid = true;
-					}
-				}
-			}
+			//randomly clear one cell
+			// var row = randomInt(8);
+			// var col = randomInt(8);
+			var cell = cells.pop();
+			var row = cell[0];
+			var col = cell[1];
+			var val = sudoku[row][col].val;
+
+			arr.push([row, col, val]);
+			sudoku[row][col].val = null;
+			updateSudoku2(sudoku, row, col, val, false);
+			valid = true;
+		
 			//if we have exactly one solution then we can take more cells away, otherwise we need to retry
-			var results = backtrack(cop, []);
-			for(var z = 0; z < results.length; z++)
-			{
-				printSudoku(results[z]);
-			}
+			// printSudoku(cop);
+			var cop = copy(sudoku);
+			var results = backtrack(cop, [], false);
 			if(results.length == 1)
 			{
-				sudoku = cop;
-				i++;
+				i ++;
+				removed = true;
+			}
+			else
+			{
+				sudoku[arr[0][0]][arr[0][1]].val = arr[0][2];
+				// sudoku[arr[1][0]][arr[1][1]].val = arr[1][2];
 			}
 		}	
 	}
+	console.log('________________________________Final Sudoku__________________________________________')
+	printSudoku(sudoku);
 }
 
 function findCell(sudoku)
@@ -235,6 +244,41 @@ function cell(value, input, options)
 	this.val = value;
 	this.input = input;
 	this.options = options;
+}
+
+function contains(array, val)
+{
+	for(var i = 0; i < array.length; i++)
+	{
+		if(array[i] == val)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function shuffledCells()
+{
+	//create an array with all 81 cell positions
+	var positions = [];
+	for(var i = 0; i < 9; i++)
+	{
+		for(var j  = 0; j < 9; j++)
+		{
+			positions.push([i, j]);
+		}
+	}
+	//shuffle the array
+	var shuff = [];
+	for(var i = 0; i < 81; i++)
+	{
+		var index = randomInt(positions.length - 1);
+		shuff.push(positions[index]);
+		remove(positions, index);
+	}
+	return shuff;
 }
 
 function remove(array, index)
@@ -278,7 +322,7 @@ function updateRow(sudoku, row, val, adding)
 		{
 			removeValue(sudoku[row][i].options, val);
 		}
-		else
+		else if(!contains(sudoku[row][i].options, val))
 		{
 			sudoku[row][i].options.push(val);
 		}
@@ -295,7 +339,7 @@ function updateCol(sudoku, col, val, adding)
 		{
 			removeValue(sudoku[i][col].options, val);
 		}
-		else
+		else if(!contains(sudoku[i][col].options, val))
 		{
 			sudoku[i][col].options.push(val);
 		}
@@ -318,9 +362,113 @@ function updateGrid(sudoku, row, col, val, adding)
 			{
 				removeValue(sudoku[r+i][c+j].options, val);
 			}
-			else
+			else if(!contains(sudoku[r+i][c+j].options, val))
 			{
 				sudoku[r+i][c+j].options.push(val);
+			}
+		}
+	}
+	return true;
+}
+
+function updateSudoku2(sudoku, row, col, val)
+{
+	printSudoku(sudoku);
+	updateRow2(sudoku, row, val);
+	updateCol2(sudoku, col, val);
+	updateGrid2(sudoku, row, col, val);
+}
+
+function updateRow2(sudoku, row, val)
+{
+	for(var i = 0; i < 9; i++)
+	{
+		if(checkSudoku(sudoku, row, i, val) && !contains(sudoku[row][i].options, val))
+		{
+			sudoku[row][i].options.push(val);	
+		}
+	}
+
+	return true;
+}
+
+function updateCol2(sudoku, col, val)
+{
+	for(var i = 0; i < 9; i++)
+	{
+		if(checkSudoku(sudoku, i, col, val) && !contains(sudoku[i][col].options, val))
+		{
+			sudoku[i][col].options.push(val);
+		}
+	}
+
+	return true;
+}
+
+function updateGrid2(sudoku, row, col, val)
+{
+	//sorry for this but I just didn't want like 20 lines to set 2 variables
+	var r = (row < 3)? 0 : (row < 6)? 3 : 6;
+	var c = (col < 3)? 0 : (col < 6)? 3 : 6;
+
+	for(var i = 0; i < 3; i++)
+	{
+		for(var j = 0; j < 3; j++)
+		{
+			if(checkSudoku(sudoku, r+i, c+j, val) && !contains(sudoku[r+i][c+j].options, val))
+			{
+				sudoku[r+i][c+j].options.push(val);
+			}
+		}
+	}
+
+	return true;
+}
+
+function checkSudoku(sudoku, row, col, val)
+{
+	return (checkRow(sudoku, row, val) && checkCol(sudoku, col, val) && checkGrid(sudoku, row, col, val));
+}
+
+function checkRow(sudoku, row, val)
+{
+	for(var i = 0; i < 9; i++)
+	{
+		if(sudoku[row][i].val == val)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function checkCol(sudoku, col, val)
+{
+	for(var i = 0; i < 9; i++)
+	{
+		if(sudoku[i][col].val == val)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function checkGrid(sudoku, row, col, val)
+{
+	//sorry for this but I just didn't want like 20 lines to set 2 variables
+	var r = (row < 3)? 0 : (row < 6)? 3 : 6;
+	var c = (col < 3)? 0 : (col < 6)? 3 : 6;
+
+	for(var i = 0; i < 3; i++)
+	{
+		for(var j = 0; j < 3; j++)
+		{
+			if(sudoku[r+i][c+j].val == val)
+			{
+				return false;
 			}
 		}
 	}
@@ -555,4 +703,3 @@ function createHTMLForInputs(){
   }
   document.getElementById("sudoku").innerHTML += s;
 }
-
