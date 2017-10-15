@@ -637,7 +637,7 @@ function createHTMLForSudoku(){
   for(let k = 0; k < 9; k++){
     s+="<tr class=\"row\">";
     for(let l = 0; l < 9; l++){
-      s += "<td class=\"cell\"><input type=\"text\" maxlength=\"1\" id=\"" + row + col + "\" class=\"inputvalue\"></td>";
+      s += "<td class=\"cell\"><input type=\"text\" maxlength=\"1\" id=\"" + row + col + "\" class=\"inputvalue\" style=\"border-bottom: 0px\"></td>";
       col++;
     }
     s+="</tr>";
