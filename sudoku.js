@@ -578,6 +578,10 @@ function findErrors(sudoku)
 	console.log(errors);
 }
 
+function hint(){
+
+}
+
 function createHTMLForSudoku(){
   createHTMLForInputs();
 }
