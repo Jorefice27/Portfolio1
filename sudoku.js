@@ -12,6 +12,9 @@ function generateSudoku(sudoku, solution)
 {
 	console.log('starting');
 	var difficulty = localStorage.getItem("difficulty");
+	var numHints = (difficulty == 'easy')? 5 : (difficulty == 'medium')? 3 : 0;
+	//TODO
+	//Store number of hints here
 	var sudokus = [];
 	while(sudokus.length == 0)
 	{
@@ -93,7 +96,6 @@ function fillSecondGrid(sudoku)
 	}
 }
 
-//which apparently I did fuck up cuz I only filled 26/27 cells when I ran it
 function fillThirdGrid(sudoku)
 {
 	for(var i = 0; i < 3; i++)
@@ -212,7 +214,7 @@ function makeUniquePuzzle(sudoku, difficulty)
 	}
 	console.log('________________________________Final Sudoku__________________________________________')
 	printSudoku(sudoku);
-  addValuesToInputs(sudoku);
+  	addValuesToInputs(sudoku);
 }
 
 //finds the empty cell with the fewest number of possible values
@@ -639,6 +641,11 @@ function addValuesToInputs(sudoku){
 }
 
 function getHint(){
+  var hintsLeft = localStorage.getItem('hints');
+  if(hintsLeft == 0){
+    return;
+  }
+  document.getElementById("hint").innerText = "Hint" + hintsLeft;
   var cells = shuffledCells();
   while(true){
     var cell = cells.pop();
@@ -655,6 +662,7 @@ function getHint(){
       break;
     }
   }
+  localStorage.setItem('hint', hintsLeft--);
 }
 
 function createHTMLForSudoku(){
