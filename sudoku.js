@@ -20,6 +20,7 @@ function generateSudoku(sudoku)
 	sudoku = sudokus[0];
 	var solution = copy(sudoku);
 	console.log("________________________________Solution__________________________________________");
+<<<<<<< HEAD
 	printSudoku(solution);
 
 	setDifficulty(sudoku);
@@ -36,6 +37,11 @@ function generateSudoku(sudoku)
 	makeUniquePuzzle(sudoku);
 	printSudoku(sudoku);
 	makeUniquePuzzle(sudoku);
+=======
+	printSudoku(solution)
+
+	makeUniquePuzzle(sudoku);
+>>>>>>> 6aa8ada08d778fe47fdbd78d4e1bc2b1c6a3d606
 }
 
 function initializeSudoku(sudoku)
