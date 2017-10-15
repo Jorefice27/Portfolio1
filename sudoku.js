@@ -2,10 +2,11 @@ function init()
 {
 	//probably make this [row][col] => [actual, [potential]]
 	var sudoku = [[], [], [], [], [], [], [], [], []];
-	generateSudoku(sudoku);
+	var solution = [[], [], [], [], [], [], [], [], []];
+	generateSudoku(sudoku, solution);
 }
 
-function generateSudoku(sudoku)
+function generateSudoku(sudoku, solution)
 {
 	console.log('starting');
 	var difficulty = localStorage.getItem("difficulty");
@@ -14,7 +15,7 @@ function generateSudoku(sudoku)
 	var sudokus = [];
 	backtrack(sudoku, sudokus);
 	sudoku = sudokus[0];
-	var solution = copy(sudoku);
+	solution = copy(sudoku);
 	makeUniquePuzzle(sudoku, difficulty);
 }
 
