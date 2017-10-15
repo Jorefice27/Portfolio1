@@ -21,24 +21,8 @@ function generateSudoku(sudoku)
 	var solution = copy(sudoku);
 	console.log("________________________________Solution__________________________________________");
 	printSudoku(solution)
-<<<<<<< HEAD
-
-	setDifficulty(sudoku);
-
-
-	// backtrack(sudoku)//, 3, 1);
-
-
-	// console.log(sudoku);
-
 
 	makeUniquePuzzle(sudoku);
-
-	makeUniquePuzzle(sudoku);
-	printSudoku(sudoku);
-=======
-	makeUniquePuzzle(sudoku);
->>>>>>> 225eff53a471507631739f9bff8855b94acd6181
 }
 
 function initializeSudoku(sudoku)
