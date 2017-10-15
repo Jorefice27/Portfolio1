@@ -10,38 +10,12 @@ function generateSudoku(sudoku)
 	console.log('starting');
 	var difficulty = localStorage.getItem("difficulty");
 	initializeSudoku(sudoku);
-	fillFirstGrid(sudoku);
-	fillSecondGrid(sudoku);
-	fillThirdGrid(sudoku);
-	fillFirstCol(sudoku);
-	console.log('backtracking...');
+	fillTopBand(sudoku);
 	var sudokus = [];
-	backtrack(sudoku, sudokus);//, 3, 1);
+	backtrack(sudoku, sudokus);
 	sudoku = sudokus[0];
 	var solution = copy(sudoku);
-	console.log("________________________________Solution__________________________________________");
-<<<<<<< HEAD
-	printSudoku(solution);
-
-	setDifficulty(sudoku);
-
-
-	// backtrack(sudoku)//, 3, 1);
-
-
-	// console.log(sudoku);
-
-
-	makeUniquePuzzle(sudoku);
-
-	makeUniquePuzzle(sudoku);
-	printSudoku(sudoku);
-	makeUniquePuzzle(sudoku);
-=======
-	printSudoku(solution)
-
-	makeUniquePuzzle(sudoku);
->>>>>>> 6aa8ada08d778fe47fdbd78d4e1bc2b1c6a3d606
+	makeUniquePuzzle(sudoku, difficulty);
 }
 
 function initializeSudoku(sudoku)
@@ -56,6 +30,13 @@ function initializeSudoku(sudoku)
 	}
 }
 
+function fillTopBand(sudoku)
+{
+	fillFirstGrid(sudoku);
+	fillSecondGrid(sudoku);
+	fillThirdGrid(sudoku);
+	fillFirstCol(sudoku);
+}
 
 function fillFirstGrid(sudoku)
 {
@@ -195,10 +176,7 @@ function makeUniquePuzzle(sudoku, difficulty)
 		while(!removed && cells.length > 0)
 		{
 			var arr = [];
-			//clear a pair of cells
-			//randomly clear one cell
-			// var row = randomInt(8);
-			// var col = randomInt(8);
+			//clear random cell
 			var cell = cells.pop();
 			var row = cell[0];
 			var col = cell[1];
@@ -571,14 +549,17 @@ function addToSudoku(sudoku, row, col, val)
 	updateSudoku(sudoku, row, col, val, true);
 }
 
-function findErrors(sudoku)
+function findErrors(sudoku, solution)
 {
 	var errors = [];
 	for(var i = 0; i < 9; i++)
 	{
 		for(var j = 0; j < 9; j++)
 		{
-
+			if(sudoku[i][j].val != null && sudoku[i][j].val != solution[i][j].val)
+			{
+				errors.push([i, j]);
+			}
 		}
 	}
 	console.log(errors);
