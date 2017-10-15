@@ -4,6 +4,7 @@
     <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="sudoku.js"></script>
+    <script type="text/javascript">window.onload = init;</script>
     <style>
     .center{
       background-image: url(https://upload.wikimedia.org/wikipedia/commons/e/e6/Sudoku_template.svg);
@@ -54,7 +55,6 @@
           <div class="col s2 offset-s4"><button type="button" class="btn btn-primary" onclick="getHint()">Hint</button></div>
           <div class="col s2"><button type="button" class="btn btn-primary" onclick="checkBoard()">Check</button></div>
       </div>
-      <button type="button" class="btn btn-primary" onclick="createHTMLForSudoku()">Make Sudoku</button>
       <hr>
       <button type="button" class="btn btn-primary" onclick="init()">test</button> <!-- Delete this, it's just for my testing -->
 
