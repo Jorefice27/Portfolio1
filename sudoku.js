@@ -1,9 +1,9 @@
 function init()
 {
 	//probably make this [row][col] => [actual, [potential]]
-	var sudoku = [[], [], [], [], [], [], [], [], []];
-	var solution = [[], [], [], [], [], [], [], [], []];
-	generateSudoku(sudoku, solution);
+	createHTMLForSudoku();
+	generateSudoku();
+	getSolution();
 }
 
 //generates a complete sudoku which is stored in solution
@@ -12,13 +12,19 @@ function generateSudoku(sudoku, solution)
 {
 	console.log('starting');
 	var difficulty = localStorage.getItem("difficulty");
-	initializeSudoku(sudoku);
-	fillTopBand(sudoku);
 	var sudokus = [];
-	backtrack(sudoku, sudokus);
+	while(sudokus.length == 0)
+	{
+		var sudoku = [[], [], [], [], [], [], [], [], []];
+		var solution = [[], [], [], [], [], [], [], [], []];
+		initializeSudoku(sudoku);
+		fillTopBand(sudoku);
+		backtrack(sudoku, sudokus);
+	}
 	sudoku = sudokus[0];
 	solution = copy(sudoku);
 	makeUniquePuzzle(sudoku, difficulty);
+	localStorage.setItem('solution', JSON.stringify(solution));
 }
 
 function initializeSudoku(sudoku)
@@ -573,6 +579,12 @@ function copy(sudoku)
 	return copy;
 }
 
+function getSolution()
+{
+	var temp = localStorage.getItem('solution');
+	var solution = JSON.parse(temp);
+}
+
 function addToSudoku(sudoku, row, col, val)
 {
 	if(sudoku[row][col].val != null)
@@ -637,7 +649,7 @@ function createHTMLForSudoku(){
   for(let k = 0; k < 9; k++){
     s+="<tr class=\"row\">";
     for(let l = 0; l < 9; l++){
-      s += "<td class=\"cell\"><input type=\"text\" maxlength=\"1\" id=\"" + row + col + "\" class=\"inputvalue\" style=\"border-bottom: 0px\"></td>";
+      s += "<td class=\"cell\"><input type=\"text\" maxlength=\"1\" id=\"" + row + col + "\" class=\"inputvalue\" style=\"border-bottom: 0px;\"></td>";
       col++;
     }
     s+="</tr>";
