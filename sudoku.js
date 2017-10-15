@@ -6,6 +6,8 @@ function init()
 	generateSudoku(sudoku, solution);
 }
 
+//generates a complete sudoku which is stored in solution
+//as well as an incomplete sudoku which uniquely solves to the solution, stored in sudoku
 function generateSudoku(sudoku, solution)
 {
 	console.log('starting');
@@ -31,6 +33,7 @@ function initializeSudoku(sudoku)
 	}
 }
 
+//fills out the top 3 rows of the sudoku and the first column
 function fillTopBand(sudoku)
 {
 	fillFirstGrid(sudoku);
@@ -61,8 +64,6 @@ function fillFirstGrid(sudoku)
 	}
 }
 
-//Apparently we COULD have already fucked up here so check that we actually have 3 values for the last row
-//before adding something
 function fillSecondGrid(sudoku)
 {
 	for(var i = 0; i < 3; i++)
@@ -198,7 +199,7 @@ function makeUniquePuzzle(sudoku, difficulty)
 			}
 			else
 			{
-				sudoku[arr[0][0]][arr[0][1]].val = arr[0][2];
+				sudoku[arr[0][0]][arr[0][1]].val = arr[0][2]; //clean this up
 				// sudoku[arr[1][0]][arr[1][1]].val = arr[1][2];
 			}
 		}
@@ -207,6 +208,8 @@ function makeUniquePuzzle(sudoku, difficulty)
 	printSudoku(sudoku);
 }
 
+//finds the empty cell with the fewest number of possible values 
+//used to implement the min conflicts approach for the CSP
 function findCell(sudoku)
 {
 	var min = 10;
@@ -240,6 +243,7 @@ function cell(value, input, options)
 	this.options = options;
 }
 
+//returns true if val is found in the array, else false
 function contains(array, val)
 {
 	for(var i = 0; i < array.length; i++)
@@ -253,6 +257,7 @@ function contains(array, val)
 	return false;
 }
 
+//returns a suffeled array of all possible cells ([0,0] through [8,8])
 function shuffledCells()
 {
 	//create an array with all 81 cell positions
@@ -275,6 +280,7 @@ function shuffledCells()
 	return shuff;
 }
 
+//removes the item at the given index from an array
 function remove(array, index)
 {
 	if(index < array.length && index >= 0)
@@ -283,6 +289,7 @@ function remove(array, index)
 	}
 }
 
+//searches vals for the given value and removes it if found
 function removeValue(vals, value)
 {
 	for(var i = 0; i < vals.length; i++)
@@ -301,6 +308,9 @@ function randomInt(max)
 	return Math.floor(Math.random() * (max + 1));
 }
 
+//updates the options for the row, column, and subgrid that [row][col] is found in
+//if adding is true, we are adding a value to the board so each cell should lose an option
+//if adding is false, we are removing a value from the board so each cell can now take on that value and it is added to options
 function updateSudoku(sudoku, row, col, val, adding)
 {
 	updateRow(sudoku, row, val, adding);
@@ -308,6 +318,8 @@ function updateSudoku(sudoku, row, col, val, adding)
 	updateGrid(sudoku, row, col, val, adding);
 }
 
+//updates the options in the row
+//used for backtracking
 function updateRow(sudoku, row, val, adding)
 {
 	for(var i = 0; i < 9; i++)
@@ -325,6 +337,8 @@ function updateRow(sudoku, row, val, adding)
 	return true;
 }
 
+//updates the options in the column
+//used for backtracking
 function updateCol(sudoku, col, val, adding)
 {
 	for(var i = 0; i < 9; i++)
@@ -342,6 +356,8 @@ function updateCol(sudoku, col, val, adding)
 	return true;
 }
 
+//updates the options for the subgrid
+//used for backtracking
 function updateGrid(sudoku, row, col, val, adding)
 {
 	//sorry for this but I just didn't want like 20 lines to set 2 variables
@@ -365,6 +381,9 @@ function updateGrid(sudoku, row, col, val, adding)
 	return true;
 }
 
+//updates the options for all cells in the same row, column, and subgrid as [row][col]
+//slightly different from the above methods since this one is used to check for uniqueness rather than a solution
+//used for backtracking
 function updateSudoku2(sudoku, row, col, val)
 {
 	updateRow2(sudoku, row, val);
@@ -372,6 +391,8 @@ function updateSudoku2(sudoku, row, col, val)
 	updateGrid2(sudoku, row, col, val);
 }
 
+//updates the options for the row
+//used for backtracking
 function updateRow2(sudoku, row, val)
 {
 	for(var i = 0; i < 9; i++)
@@ -385,6 +406,8 @@ function updateRow2(sudoku, row, val)
 	return true;
 }
 
+//updates the options in the column
+//used for backtracking
 function updateCol2(sudoku, col, val)
 {
 	for(var i = 0; i < 9; i++)
@@ -398,6 +421,8 @@ function updateCol2(sudoku, col, val)
 	return true;
 }
 
+//updates the options for the subgrid
+//used for backtracking
 function updateGrid2(sudoku, row, col, val)
 {
 	//sorry for this but I just didn't want like 20 lines to set 2 variables
@@ -418,11 +443,13 @@ function updateGrid2(sudoku, row, col, val)
 	return true;
 }
 
+//Checks if val is already found in the same row, column, or grid as [row][col]
 function checkSudoku(sudoku, row, col, val)
 {
 	return (checkRow(sudoku, row, val) && checkCol(sudoku, col, val) && checkGrid(sudoku, row, col, val));
 }
 
+//checks if val is already in the row
 function checkRow(sudoku, row, val)
 {
 	for(var i = 0; i < 9; i++)
@@ -436,6 +463,7 @@ function checkRow(sudoku, row, val)
 	return true;
 }
 
+//checks if val is already in the column
 function checkCol(sudoku, col, val)
 {
 	for(var i = 0; i < 9; i++)
@@ -449,6 +477,7 @@ function checkCol(sudoku, col, val)
 	return true;
 }
 
+//checks if val is already in the sub grid
 function checkGrid(sudoku, row, col, val)
 {
 	//sorry for this but I just didn't want like 20 lines to set 2 variables
@@ -468,6 +497,8 @@ function checkGrid(sudoku, row, col, val)
 	return true;
 }
 
+//ensures that every empty cell has at least one possible value
+//used for backtracking
 function validateSudoku(sudoku)
 {
 	for(var i = 0; i < 9; i++)
@@ -486,6 +517,8 @@ function validateSudoku(sudoku)
 	return true;
 }
 
+//prints the given sudoku to the console
+//used for testing
 function printSudoku(sudoku)
 {
 	for(var i = 0; i < 9; i++)
@@ -518,6 +551,7 @@ function printSudoku(sudoku)
 	console.log(' ');
 }
 
+//returns a deep copy of the given sudoku
 function copy(sudoku)
 {
 	var copy = [[], [], [], [], [], [], [], [], []];
