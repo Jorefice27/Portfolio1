@@ -8,7 +8,7 @@ function init()
 
 function newPuzzle()
 {
-	window.location.href = 'sudoku.html';
+	location.reload();
 }
 
 //generates a complete sudoku which is stored in solution
@@ -592,6 +592,21 @@ function getSolution()
   return solution;
 }
 
+function solve()
+{
+	var solution = getSolution();
+	for(var i = 0; i < 9; i++)
+	{
+		for(var j = 0; j < 9; j++)
+		{
+			var id = "" + i + j;
+			document.getElementById(id).value = solution[i][j].val;
+			document.getElementById(id).readOnly = true;
+      		document.getElementById(id).style.fontWeight = '900';
+		}
+	}
+}
+
 function addToSudoku(sudoku, row, col, val)
 {
 	if(sudoku[row][col].val != null)
@@ -676,6 +691,7 @@ function addValuesToInputs(sudoku){
 function getHint(){
   var hintsLeft = localStorage.getItem('hint');
   if(hintsLeft == 0){
+  	solve();
     return;
   }
   var cells = shuffledCells();
@@ -696,9 +712,15 @@ function getHint(){
     }
   }
   hintsLeft--;
-  document.getElementById("hint").innerText = "Hint (" + hintsLeft + ")";
   localStorage.setItem('hint', hintsLeft);
-
+  if(hintsLeft > 0)
+  {
+  	document.getElementById("hint").innerText = "Hint (" + hintsLeft + ")";
+  }
+  else
+  {
+  	document.getElementById('hint').innerText = 'solve';
+  }
 }
 
 function setHintButton()
