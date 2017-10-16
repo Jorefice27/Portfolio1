@@ -13,8 +13,7 @@ function generateSudoku(sudoku, solution)
 	console.log('starting');
 	var difficulty = localStorage.getItem("difficulty");
 	var numHints = (difficulty == 'easy')? 5 : (difficulty == 'medium')? 3 : 0;
-	//TODO
-	//Store number of hints here
+	localStorage.setItem('hint', numHints);
 	var sudokus = [];
 	while(sudokus.length == 0)
 	{
@@ -600,6 +599,37 @@ function addToSudoku(sudoku, row, col, val)
 	updateSudoku(sudoku, row, col, val, true);
 }
 
+function checkBoard()
+{
+	var solution = getSolution();
+	var score = 0;
+	for(var i = 0; i < 9; i++)
+	{
+		for(var j = 0; j < 9; j++)
+		{
+			var id = "" + i + j;
+			var val = document.getElementById(id).value;
+			var sol = solution[i][j].val;
+			if(val != "")
+			{
+				if(val != solution[i][j].val)
+				{
+					document.getElementById(id).style.color = 'red';
+				}
+				else
+				{
+					score++;
+				}
+			}
+		}
+	}
+
+	if(score == 81)
+	{
+		console.log('You win!');
+	}
+}
+
 function findErrors(sudoku, solution)
 {
 	var errors = [];
@@ -632,6 +662,7 @@ function addValuesToInputs(sudoku){
       else{
         document.getElementById(s).value = val;
         document.getElementById(s).readOnly = true;
+        document.getElementById(s).style.fontWeight = '900';
       }
       col++;
     }
@@ -654,6 +685,7 @@ function getHint(){
       var solution = getSolution();
       document.getElementById(s).value = solution[row][col].val;
       document.getElementById(s).readOnly = true;
+      document.getElementById(s).style.fontWeight = '900';
       break;
     }
   }
