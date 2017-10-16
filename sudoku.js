@@ -6,6 +6,11 @@ function init()
 	getSolution();
 }
 
+function newPuzzle()
+{
+	window.location.href = 'sudoku.html';
+}
+
 //generates a complete sudoku which is stored in solution
 //as well as an incomplete sudoku which uniquely solves to the solution, stored in sudoku
 function generateSudoku(sudoku, solution)
@@ -584,7 +589,7 @@ function getSolution()
 {
 	var temp = localStorage.getItem('solution');
 	var solution = JSON.parse(temp);
-  	return solution;
+  return solution;
 }
 
 function addToSudoku(sudoku, row, col, val)
@@ -628,22 +633,19 @@ function checkBoard()
 	{
 		alert('You Win!!');
 	}
-}
-
-function findErrors(sudoku, solution)
-{
-	var errors = [];
-	for(var i = 0; i < 9; i++)
+	else
 	{
-		for(var j = 0; j < 9; j++)
-		{
-			if(sudoku[i][j].val != null && sudoku[i][j].val != solution[i][j].val)
+		setTimeout(function(){
+			for(var i = 0; i < 9; i++)
 			{
-				errors.push([i, j]);
+				for(var j = 0; j < 9; j++)
+				{
+					var id = "" + i + j;
+					document.getElementById(id).style.color = 'black';
+				}
 			}
-		}
+		}, 2000);
 	}
-	console.log(errors);
 }
 
 function addValuesToInputs(sudoku){
@@ -672,6 +674,10 @@ function addValuesToInputs(sudoku){
 }
 
 function getHint(){
+  var hintsLeft = localStorage.getItem('hint');
+  if(hintsLeft == 0){
+    return;
+  }
   var cells = shuffledCells();
   while(true){
     var cell = cells.pop();
@@ -689,6 +695,10 @@ function getHint(){
       break;
     }
   }
+  hintsLeft--;
+  document.getElementById("hint").innerText = "Hint (" + hintsLeft + ")";
+  localStorage.setItem('hint', hintsLeft);
+
 }
 
 function setHintButton()
