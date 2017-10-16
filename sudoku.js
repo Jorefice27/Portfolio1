@@ -626,7 +626,7 @@ function checkBoard()
 
 	if(score == 81)
 	{
-		console.log('You win!');
+		alert('You Win!!');
 	}
 }
 
@@ -689,6 +689,11 @@ function getHint(){
       break;
     }
   }
+}
+
+function setHintButton()
+{
+	document.getElementById('hint').innerHTML = 'HINT (' + localStorage.getItem('hint') + ')';
 }
 
 function createHTMLForSudoku(){
