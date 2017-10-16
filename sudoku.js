@@ -693,10 +693,9 @@ function getHint(){
       break;
     }
   }
-  alert(hintsLeft);
   hintsLeft--;
   document.getElementById("hint").innerText = "Hint (" + hintsLeft + ")";
-  localStorage.setItem('hint', hintsLeft;
+  localStorage.setItem('hint', hintsLeft);
 
 }
 
